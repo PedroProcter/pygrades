@@ -11,6 +11,9 @@ class User(Model):
     class Meta:
         database = db
 
+    def __repr__(self):
+        return f"User(id={self.id}, username={self.username}, password={self.password}, isTeacher={self.isTeacher})"
+
 class Teacher(Model):
     id = AutoField(null = False)
     user = ForeignKeyField(User)
@@ -44,11 +47,16 @@ class Grade(Model):
     class Meta:
         database = db
 
-db.connect()
-db.create_tables([
-    User,
-    Teacher,
-    Student,
-    Subject,
-    Grade,
-])
+def main():
+
+    db.connect()
+    db.create_tables([
+        User,
+        Teacher,
+        Student,
+        Subject,
+        Grade,
+    ])
+
+if __name__ == "__main__":
+    main()
