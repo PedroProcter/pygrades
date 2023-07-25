@@ -4,14 +4,16 @@ import sqlite3
 
 student_id = 6
 
-total_grade = 0
-n = 0
-average = 0
-student_grade = []
-student_name = []
-id_subject_grade = []
-subject_name = []
-i = 0
+#Variables
+
+total_grade = 0         #variable for the sume of all the grades
+n = 0                   #n, to know all the subjects that the student has
+average = 0             #this is the average of the sume of all grades divided by the number of subjects
+student_grade = []      #used to storage the grades values
+student_name = []       #used to storage the name of the student
+id_subject_grade = []   #used to storage the id of the subject
+subject_name = []       #used to storage the name of the subject
+i = 0                   #used for the for statement
 
 # Connect to the database
 conn = sqlite3.connect('pygrades.db')
