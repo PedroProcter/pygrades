@@ -1,93 +1,113 @@
-from models import User, Teacher, Student, Subject, Grade
 
 import sqlite3
 
-student_id = 6
+student_id = 2
 
-#Variables
+#This function enters the data base and gets all the important data
+def get_data(student_id: int):
+    total_grade = 0             #variable for the sume of all the grades
+    n = 0                       #n, to know all the subjects that the student has
+    average: float = 0          #this is the average of the sume of all grades divided by the number of subjects
+    student_grade = []          #used to storage the grades values
+    student_name = []           #used to storage the name of the student
+    id_subject_grade = []       #used to storage the id of the subject
+    subject_name = []           #used to storage the name of the subject
+    teacher_subject_grade = []  #id of the teacher that modifies or create the grades
+    i = 0                       #used for the for statement
 
-total_grade = 0         #variable for the sume of all the grades
-n = 0                   #n, to know all the subjects that the student has
-average = 0             #this is the average of the sume of all grades divided by the number of subjects
-student_grade = []      #used to storage the grades values
-student_name = []       #used to storage the name of the student
-id_subject_grade = []   #used to storage the id of the subject
-subject_name = []       #used to storage the name of the subject
-i = 0                   #used for the for statement
+    # Connect to the database
+    conn = sqlite3.connect('pygrades.db')
 
-# Connect to the database
-conn = sqlite3.connect('pygrades.db')
+    # Create a cursor object
+    cursor = conn.cursor()
 
-# Create a cursor object
-cursor = conn.cursor()
+    # Execute the SELECT statement
+    cursor.execute("SELECT * FROM grade")
 
-# Execute the SELECT statement
-cursor.execute("SELECT * FROM grade")
+    # Fetch all the rows
+    rows = cursor.fetchall()
 
-# Fetch all the rows
-rows = cursor.fetchall()
+    # Print the grades
+    for row in rows:
+        if(student_id == row[2]):
+            id_subject_grade.append(row[1])
+            teacher_subject_grade.append(row[3])
+            student_grade.append(row[4])
+            #Calculate the total grade (Sume of all grades)
+            total_grade += row[4]
+            #Calculate the total of subjects that the student has
+            n += 1
+            # Calculate the average
+            average = total_grade / n
 
-# Print the grades
-for row in rows:
-    if(student_id == row[2]):
-        id_subject_grade.append(row[1])
-        student_grade.append(row[4])
-        #Calculate the total grade (Sume of all grades)
-        total_grade += row[4]
-        #Calculate the total of subjects that the student has
-        n += 1
-        # Calculate the average
-        average = total_grade / n
+    # Close the connection
+    conn.close()
 
-# Close the connection
-conn.close()
+    # Connect to the database
+    conn = sqlite3.connect('pygrades.db')
 
-# Connect to the database
-conn = sqlite3.connect('pygrades.db')
+    # Create a cursor object
+    cursor = conn.cursor()
 
-# Create a cursor object
-cursor = conn.cursor()
+    # Execute the SELECT statement
+    cursor.execute("SELECT * FROM student")
 
-# Execute the SELECT statement
-cursor.execute("SELECT * FROM student")
+    # Fetch all the rows
+    rows = cursor.fetchall()
 
-# Fetch all the rows
-rows = cursor.fetchall()
+    # Print the grades
+    for row in rows:
+        if(student_id == row[0]):
+            student_name.append(row[2])
 
-# Print the grades
-for row in rows:
-    if(student_id == row[0]):
-        student_name.append(row[2])
+    # Close the connection
+    conn.close()
 
-# Close the connection
-conn.close()
+    # Connect to the database
+    conn = sqlite3.connect('pygrades.db')
 
-# Connect to the database
-conn = sqlite3.connect('pygrades.db')
+    # Create a cursor object
+    cursor = conn.cursor()
 
-# Create a cursor object
-cursor = conn.cursor()
+    # Execute the SELECT statement
+    cursor.execute("SELECT * FROM subject")
 
-# Execute the SELECT statement
-cursor.execute("SELECT * FROM subject")
+    # Fetch all the rows
+    rows = cursor.fetchall()
 
-# Fetch all the rows
-rows = cursor.fetchall()
+    # Print the grades
+    for row in rows:
+        if(id_subject_grade[i] == row[0]):
+            subject_name.append(row[1])
+            i+= 1
 
-# Print the grades
-for row in rows:
-    if(id_subject_grade[i] == row[0]):
-        subject_name.append(row[1])
-        i+= 1
+    # Close the connection
+    conn.close()
 
-# Close the connection
-conn.close()
+    #Return all the data that is necessary
+    return student_name, id_subject_grade, subject_name, student_grade, teacher_subject_grade, average
 
-#Print the name of the student and all the grades
-print("Estudiante: ",student_name[0])
-print("\n")
-# Print the grades
-for g in range(2):
-    print("Asignatura: ",subject_name[g])
-    print("Calificacion: ",student_grade[g])
-print("\nEl promedio del estudiante es: ",average)
+#This function is for show the grades of a student
+def show_grades(student_id: int):
+    grades = []
+    grades = get_data(student_id)
+
+    #Print the name of the student and all the grades
+    print("Estudiante: ",grades[0])
+    print("\n")
+    # Print the grades
+    for g in range(2):
+        print("Asignatura: ",grades[2][g])
+        print("Calificacion: ",grades[3][g])
+
+#This function is for show the grades avergae of a student
+def show_average(student_id: int):
+    data = []
+    data = get_data(student_id)
+
+    print("\nEstudiante: ",data[0])
+    print("Promedio: ",data[5])
+
+
+show_grades(student_id)
+show_average(student_id)
