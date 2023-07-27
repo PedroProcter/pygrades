@@ -212,6 +212,24 @@ def main():
     second_grade_tenth_student = Grade(subject = 2, student = 10, teacher = 1, value = 81)
     second_grade_tenth_student.save()
 
+    first_grade_eleventh_student = Grade(subject = 1, student = 11, teacher = 3, value = 70)
+    first_grade_eleventh_student.save()
+
+    second_grade_eleventh_student = Grade(subject = 2, student = 11, teacher = 1, value = 75)
+    second_grade_eleventh_student.save()
+
+    first_grade_twelfth_student = Grade(subject = 1, student = 12, teacher = 3, value = 80)
+    first_grade_twelfth_student.save()
+
+    second_grade_twelfth_student = Grade(subject = 2, student = 12, teacher = 1, value = 83)
+    second_grade_twelfth_student.save()
+
+    first_grade_thirteenth_student = Grade(subject = 1, student = 13, teacher = 3, value = 90)
+    first_grade_thirteenth_student.save()
+
+    second_grade_thirteenth_student = Grade(subject = 2, student = 13, teacher = 1, value = 79)
+    second_grade_thirteenth_student.save()
+
 
 if __name__ == "__main__":
     main()

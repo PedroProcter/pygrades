@@ -1,7 +1,7 @@
 
 import sqlite3
 
-student_id = 2
+student_id:int = 6
 
 #This function enters the data base and gets all the important data
 def get_data(student_id: int):
@@ -13,7 +13,7 @@ def get_data(student_id: int):
     id_subject_grade = []       #used to storage the id of the subject
     subject_name = []           #used to storage the name of the subject
     teacher_subject_grade = []  #id of the teacher that modifies or create the grades
-    i = 0                       #used for the for statement
+    i:int = 0                       #used for the for statement
 
     # Connect to the database
     conn = sqlite3.connect('pygrades.db')
