@@ -1,5 +1,5 @@
 import tkinter as tk
-from Frame_GUI import Frame, barra_menu
+from client.Frame_GUI import Frame, barra_menu
 
 def main():
     ventana = tk.Tk()
