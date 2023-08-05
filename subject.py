@@ -70,5 +70,6 @@ def Elimnar_subject():
     conn.close()
 
 #Elimnar_subject()
-#show_subject()
-#create_subject()
+show_subject()
+create_subject()
+show_subject()
