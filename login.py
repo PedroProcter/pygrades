@@ -29,7 +29,7 @@ def login():
     if dataUser==username and dataPass==password:
         messagebox.showinfo(title="Login Success", message="Haz iniciado sesión correctamente.")
         if(isteacher == 1):
-             main()   
+             main()  
     else:
         messagebox.showerror(title="Error", message="Fallo en inicio de sesión.")
 
