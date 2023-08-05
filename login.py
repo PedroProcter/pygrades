@@ -1,5 +1,7 @@
 import tkinter
 from tkinter import messagebox
+from get_user import get_user_data
+from App_Pygrades import main
 
 window = tkinter.Tk()
 window.title("Inicio de sesión")
@@ -7,10 +9,27 @@ window.geometry('440x580')
 window.configure(bg='#333333')
 
 def login():
-    username = "johnsmith"
-    password = "12345"
-    if username_entry.get()==username and password_entry.get()==password:
+
+    username = username_entry.get()
+    password = password_entry.get()
+
+    userData = []
+    userData = get_user_data(username,password)
+
+    dataUser = userData[0][0]
+    dataPass = userData[1][0]
+    dataId = userData[2][0]
+    dataIste = userData[3][0]
+
+    isteacher:int = 0
+
+    if(dataId <6):
+            isteacher = 1
+
+    if dataUser==username and dataPass==password:
         messagebox.showinfo(title="Login Success", message="Haz iniciado sesión correctamente.")
+        if(isteacher == 1):
+             main()   
     else:
         messagebox.showerror(title="Error", message="Fallo en inicio de sesión.")
 
