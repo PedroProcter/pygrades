@@ -1,7 +1,7 @@
 from .conexion_db import ConexionDB
 from tkinter import messagebox
-#CREAR DATOS - INSERTAR DATOS
 
+#---FUNCION CREAR TABLA---
 def crear_tabla():
     conexion = ConexionDB()
 
@@ -11,7 +11,7 @@ def crear_tabla():
         Estudiante VARCHAR(50),
         Asignatura VARCHAR(50),
         Calificacion INTEGER,
-        PRIMARY KEY(id_estudiante AUTOINCREMENT)
+        PRIMARY KEY(ID_Estudiante AUTOINCREMENT)
         )'''
     try:
         conexion.cursor.execute(sql)
@@ -21,9 +21,10 @@ def crear_tabla():
         messagebox.showinfo(titulo,mensaje)
     except:
         titulo = "Crear_registro"
-        mensaje = "La base de datos ya está creada"
+        mensaje = "La tabla ya está creada"
         messagebox.showwarning(titulo,mensaje)
 
+#---FUNCION BORRAR TABLA---
 def borrar_tabla():
     conexion = ConexionDB()
 
@@ -50,8 +51,9 @@ class Pygrades:
     def __str__(self):
         return f"Pygrades[{self.Estudiante}, {self.Asignatura}, {self.Calificacion}]"
     
+#----FUNCION PARA GUARDAR REGISTRO----    
 def guardar(pygrades):
-    conexion =ConexionDB()
+    conexion = ConexionDB()
 
     sql = f"""INSERT INTO pygrades (Estudiante, Asignatura, Calificacion)
     VALUES('{pygrades.Estudiante}', '{pygrades.Asignatura}', '{pygrades.Calificacion}')"""
@@ -65,9 +67,10 @@ def guardar(pygrades):
         mensaje = 'La tabla pygrades no esta creada en la base de datos'
         messagebox.showerror(titulo, mensaje)
 
+#---FUNCION SELECCIONAR PARA EDITAR---- 
 def listar():
     conexion = ConexionDB()
-    
+
     lista_pygrades = []
     sql = 'SELECT * FROM pygrades'
 
@@ -76,10 +79,41 @@ def listar():
         lista_pygrades = conexion.cursor.fetchall()
         conexion.cerrar()
     except:
-        titulo = 'Conexion al Registro'
+        titulo = 'Conexion al Registro' 
         mensaje = 'Crea la tabla en la base de dato'
         messagebox.showerror(titulo, mensaje)
 
     return lista_pygrades
 
+#---- FUNCION EDITAR REGISTRO-----
+def editar (Pygrades, ID_Estudiante):
+    conexion = ConexionDB()
+
+    sql = f""" UPDATE Pygrades
+    SET Estudiante = '{Pygrades.Estudiante}', Asignatura = '{Pygrades.Asignatura}', Calificacion = '{Pygrades.Calificacion}'
+    WHERE ID_Estudiante = {ID_Estudiante}""" 
+
+    try:
+        conexion.cursor.execute(sql)
+        conexion.cerrar()
+    except:
+        titulo = "Edición de datos"
+        menseje = "No se pudo editar este registro"
+        messagebox.showerror(titulo,menseje)
+
+def eliminar(ID_Estudiante):
+    conexion = ConexionDB()
     
+    sql = f'DELETE FROM pygrades WHERE ID_Estudiante = {ID_Estudiante}'
+    
+    try:
+        conexion.cursor.execute(sql)
+        conexion.cerrar()
+    except:
+        titulo = "Eliminar Datos"
+        menseje = "No se pudo eliminar este registro"
+        messagebox.showerror(titulo,menseje)
+
+        
+
+
